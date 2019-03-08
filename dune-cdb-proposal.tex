@@ -8,16 +8,20 @@
 \usepackage[pdftex,pdfpagelabels,bookmarks,hyperindex,hyperfigures]{hyperref}
 
 
-\title{A Design of the \pd/\expname Prompt Processing System}
+\title{Modern architectures of the Conditions Database Systems and their potential applications in DUNE}
 \date{\today}
-\author{N. Benekos, M.\,Potekhin and B.\,Viren}
+\author{P.\,Laycock, M.\,Potekhin}
 
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-\noindent  We start with a brief summary
+\noindent  In the past few years the HEP community has developed fresh understanding of
+the use cases and challenges of the Conditions Database systems based on the experience of
+the LHC and other experiments. New and converging designs have been created and implemented
+in experiments such as CMS, Belle II and others. We consider the features of these
+new architectures and potential advantages they can bring to DUNE.
 
 %% \cite{docdb1086}, DocDB\ and
 \end{abstract}
@@ -25,11 +29,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Overview}
-\subsection{Terminology}
-Some of the terms, acronyms and abbreviations used in this document are explained in the glossary in Appendix %% \ref{sec:glossary}.
+According to  the HSF document \textit{``A Roadmap for HEP Software and Computing R\&D for the 2020s''} \cite{hsf_roadmap},
+\begin{quote}
+Conditions data is defined as the non-event data required by data-processing software to correctly simulate, digitise or reconstruct the raw detector event data. The
+non-event data discussed here consists mainly of detector calibration and alignment
+information, with some additional data describing the detector configuration, the
+machine parameters, as well as information from the detector control system.
+\end{quote}
+
+\noindent It is important to note that the conditions data comprises a considerable variety of information,
+which may also come in different formats and in different volumes depending on the use case.
+
 
 \subsection{Motivation}
-\underlineDUNE
+\underline{DUNE}
 
 \subsection{Data Scenarios and Data Handling}
 \label{sec:rawdata}
@@ -57,24 +70,22 @@ online buffers.
 %% \end{figure}
 
 
-\newpage
-\appendix
-\section{Glossary}
-\label{sec:glossary}
-\begin{description}
-
-\item [foo] description
-
-\end{description}
+%%\newpage
+%%\appendix
+%%\section{Glossary}
+%%\label{sec:glossary}
+%%\begin{description}
+%%\item [foo] description
+%%\end{description}
 
 
 \clearpage
 \begin{thebibliography}{1}
-\bibitem{hsf_roadmap}{\textit{A Roadmap for HEP Software and Computing R&D for the 2020s}arXiv:1712.06982 \\
-  \url{https://arxiv.org/abs/1712.06982}
+\bibitem{hsf_roadmap}
+{\textit{A Roadmap for HEP Software and Computing R\&D for the 2020s}arXiv:1712.06982} \url{https://arxiv.org/abs/1712.06982}
 
-\bibitem{condb}{\textit{Conditions Database at Fermilab} \\
-  \url{https://cdcvs.fnal.gov/redmine/projects/condb/wiki/Conditions_Database_at_Fermilab}
+\bibitem{condb}
+{\textit{Conditions Database at Fermilab}  \url{https://cdcvs.fnal.gov/redmine/projects/condb/wiki/Conditions_Database_at_Fermilab}}
 
 \end{thebibliography}
 
