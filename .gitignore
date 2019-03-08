@@ -1,0 +1,12 @@
+auto
+*~
+~*
+*.aux
+*.fls
+*.log
+*.clo
+*.out
+*.toc
+*.dvi
+*.gz
+*.pdf
