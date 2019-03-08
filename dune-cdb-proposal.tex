@@ -1,0 +1,80 @@
+\documentclass[pdftex,12pt,letter]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{xspace}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[pdftex,pdfpagelabels,bookmarks,hyperindex,hyperfigures]{hyperref}
+
+
+\title{A Design of the \pd/\expname Prompt Processing System}
+\date{\today}
+\author{N. Benekos, M.\,Potekhin and B.\,Viren}
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent  We start with a brief summary
+
+%% \cite{docdb1086}, DocDB\ and
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Overview}
+\subsection{Terminology}
+Some of the terms, acronyms and abbreviations used in this document are explained in the glossary in Appendix %% \ref{sec:glossary}.
+
+\subsection{Motivation}
+\underlineDUNE
+
+\subsection{Data Scenarios and Data Handling}
+\label{sec:rawdata}
+
+\subsection{Data Streams}
+\label{sec:streams}
+
+For reasons that are outside of the scope of this document  the experimental raw data
+will come as three distinct streams at the time they are captured:
+\begin{itemize}
+\item \textbf{LArTPC} The TPC  stream which is dominant in terms of rate and volume
+\item \textbf{BI} Beam Instrumentation data from Cherenkov, TOF and other systems
+\item \textbf{CRT} Cosmic Ray Tagger data
+\end{itemize}
+
+\noindent All three streams will follow a similar path in that they will be transmitted from their respective
+online buffers.
+
+
+%% \begin{figure}[tbh]
+%%   \centering
+%%   \includegraphics[width=1.1\textwidth]{figures/prompt_queues_1.pdf}
+%%   \caption{Categories of prompt processing jobs grouped in queues. In this example, the depths of queues are different for different job types.}
+%%   \label{fig:queues1}
+%% \end{figure}
+
+
+\newpage
+\appendix
+\section{Glossary}
+\label{sec:glossary}
+\begin{description}
+
+\item [foo] description
+
+\end{description}
+
+
+\clearpage
+\begin{thebibliography}{1}
+\bibitem{ref1}
+{ref1: \textit{Reference 1 }\\
+\url{http://ref1.com}
+
+\end{thebibliography}
+
+
+\end{document}
