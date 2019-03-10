@@ -43,32 +43,56 @@ which may also come in different formats and in different volumes depending on t
 we will use the abbreviated term \textbf{CDB } to refer to the conditions database both as a concept and as an
 instance where appropriate.
 
-An important feature of the operating environment of a CDB is a potentially very high
-access rate due to a large number of processing jobs runnning simultaneously in the distrubuted environment
-and requesting the conditions data. Use of some sort of efficient caching mechanism is mandatory for
-the system to be performant.
+An crucial feature of the operating environment of a CDB is a potentially very high access rate due to a large
+ number of processing jobs runnning simultaneously in the distrubuted environment and requesting the conditions
+data. Use of some sort of efficient caching mechanism is mandatory for the system to be performant.
 
 
-\subsection{Architecture Convergence}
+\section{Architecture Convergence}
+
 HEP and NP experiments have been using a variety of CDB systems over the past few decades.
 More recently, the LHC experiments encountered issues related to the complexity and
-maintainability of their systems\cite{func_test}. To meet the challenges of the ever increasing scale
+maintainability of their systems \cite{func_test}. To meet the challenges of the ever increasing scale
 and complexity of data processing the LHC experiments such as ATLAS and CMS have converged on
 a common CDB architecture, which is also now shared by the Belle II experiment at KEK \cite{b2cdb}.
+The salient features of this approach are as follows:
+\begin{itemize}
 
-The salient feature of this approach is the separation of the \textbf{metadata} and the \textbf{content}
+\item Application-agnostic design of the database table schemas, with a limited number of
+carefully designed tables
+
+\item Separation of the \textbf{metadata} and the \textbf{content}
 (commonly termed \textit{payloads} as there can be numerous types and pieces of data corresponding
-to a particular time period and operating parameters of the experiment). It is important to note that
-the interface to CDB is based on the REST technology. The metadata is queried first in order to
-get a reference to the set of payloads that comprise the conditions data, then the conditions data
-is served to the requestor.
+to a particular time period and operating parameters of the experiment)
+
+\item The CDB interface based on the REST technology
+\end{itemize}
+
+
+\noindent  It is important to note that  the metadata is queried first in order to get a reference to the
+set of payloads that comprise the conditions data, then the conditions data is served to the requestor.
 
 In case of CMS, the payloads are stored as binary objects within a database table, whereas in Belle II
 the data are kept in files which are served to the requestor using a highly performant NGNIX server instance
 \cite{nginx}. A Web service locates the reference to the data first (as URLs pointing to the relevant set of files)
-and the application then accesses the NGNIX server.
+and the application then obtaines these data via the NGNIX server.
 
-This design provides ample opportunities to ue caching.
+This design provides ample opportunities for caching. The metadata service can be fronted by a number
+of caching solutions. Same applies to ehe content server (e.g. the service delivering the payloads) and in
+addition solution such as CVMFS can be put into place.
+
+\section{Current technology used in DUNE}
+
+The current ``default'' solution for the conditions data is the \textit{ConDB} system developed and maintened
+at FNAL. It is modeled after the \textit{``COOL''} design used in ATLAS which is now considered obsolete and difficult to
+maintain. The data model in ConDB is based on the notion of ``channels'' such as individual detector channels.
+The basic use case used in the design was one that included calibration constants for the detector channels.
+There is no way to include arbitrary elements of data (e.g. MC-derived parameters, maps etc) except for making
+``fake'' channels and mapping data to those channels which may be crafty and/or unwieldy. Binary objects
+required by applications (e.g. ROOT files containing calibrations constants) are difficult and/or suboptimal
+to incorporate.
+
+The modern design used in CMS, Belle II and now actively pursued in the ATLAS R\&D is free of these limitiations.
 
 
 %% \begin{figure}[tbh]
