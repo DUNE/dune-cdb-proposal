@@ -29,37 +29,32 @@ new architectures and potential advantages they can bring to DUNE.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Overview}
-According to  the HSF document \textit{``A Roadmap for HEP Software and Computing R\&D for the 2020s''} \cite{hsf_roadmap},
+According to  the HSF document titled \textit{``A Roadmap for HEP Software and Computing R\&D for the 2020s''} \cite{hsf_roadmap},
 \begin{quote}
-Conditions data is defined as the non-event data required by data-processing software to correctly simulate, digitise or reconstruct the raw detector event data. The
-non-event data discussed here consists mainly of detector calibration and alignment
-information, with some additional data describing the detector configuration, the
-machine parameters, as well as information from the detector control system.
+Conditions data is defined as the non-event data required by data-processing software to correctly simulate,
+digitise or reconstruct the raw detector event data. The non-event data discussed here consists mainly of
+detector calibration and alignment information, with some additional data describing the detector configuration,
+the machine parameters, as well as information from the detector control system.
 \end{quote}
-
 \noindent It is important to note that the conditions data comprises a considerable variety of information,
-which may also come in different formats and in different volumes depending on the use case.
+which may also come in different formats and in different volumes depending on the use case. In the following
+we will use the abbreviated term \textbf{CDB } to refer to the conditions database both as a concept and as an
+instance where appropriate.
+
+An important feature of the operating environment of a CDB is a potentially very high
+access rate due to a large number of processing jobs runnning simultaneously in the distrubuted environment
+and requesting the conditions data. Use of some sort of efficient caching mechanism is mandatory for
+the system to be performant.
 
 
-\subsection{Motivation}
-\underline{DUNE}
+\subsection{Architecture Convergence}
+HEP and NP experiments have been using a variety of CDB systems over the past few decades.
+More recently, the LHC experiments encountered issues related to the complexity and
+maintainability \cite{func_test}. To meet the challenges of the ever increasing scale of
+data processing the LHC experiments such as ATLAS and CMS have converged on
+a common CDB architecture, which is also now shared by Bells II.
 
-\subsection{Data Scenarios and Data Handling}
-\label{sec:rawdata}
-
-\subsection{Data Streams}
-\label{sec:streams}
-
-For reasons that are outside of the scope of this document  the experimental raw data
-will come as three distinct streams at the time they are captured:
-\begin{itemize}
-\item \textbf{LArTPC} The TPC  stream which is dominant in terms of rate and volume
-\item \textbf{BI} Beam Instrumentation data from Cherenkov, TOF and other systems
-\item \textbf{CRT} Cosmic Ray Tagger data
-\end{itemize}
-
-\noindent All three streams will follow a similar path in that they will be transmitted from their respective
-online buffers.
+In this approach, there is a separation of the content (commonly termed \textit{payload})
 
 
 %% \begin{figure}[tbh]
@@ -81,8 +76,12 @@ online buffers.
 
 \clearpage
 \begin{thebibliography}{1}
+
 \bibitem{hsf_roadmap}
 {\textit{A Roadmap for HEP Software and Computing R\&D for the 2020s}arXiv:1712.06982} \url{https://arxiv.org/abs/1712.06982}
+
+\bibitem{func_test}
+{\textit{Functional tests of a prototype for the CMS-ATLAS common non-event data handling framework}} \url{https://iopscience.iop.org/article/10.1088/1742-6596/898/4/042047}
 
 \bibitem{condb}
 {\textit{Conditions Database at Fermilab}  \url{https://cdcvs.fnal.gov/redmine/projects/condb/wiki/Conditions_Database_at_Fermilab}}
