@@ -18,10 +18,12 @@
 
 \begin{abstract}
 \noindent  In the past few years the HEP community has developed fresh understanding of
-the use cases and challenges of the Conditions Database systems based on the experience of
-the LHC and other experiments. New and converging designs have been created and implemented
-in experiments such as CMS, Belle II and others. We consider the features of these
-new architectures and potential advantages they can bring to DUNE.
+the use cases and challenges of the Conditions Database systems based on the experience
+of the LHC and other projects. New and converging designs have been created and
+implemented in experiments such as CMS, Belle II and others. In this short paper we consider the features
+of these new architectures and potential advantages they can bring to DUNE. In conclusion,
+we note that the Conditions Database expertise that exist within the BNL team of developers
+can be leveraged to the benfit of the DUNE experiment.
 
 %% \cite{docdb1086}, DocDB\ and
 \end{abstract}
@@ -50,11 +52,23 @@ the system to be performant.
 \subsection{Architecture Convergence}
 HEP and NP experiments have been using a variety of CDB systems over the past few decades.
 More recently, the LHC experiments encountered issues related to the complexity and
-maintainability \cite{func_test}. To meet the challenges of the ever increasing scale of
-data processing the LHC experiments such as ATLAS and CMS have converged on
-a common CDB architecture, which is also now shared by Bells II.
+maintainability of their systems\cite{func_test}. To meet the challenges of the ever increasing scale
+and complexity of data processing the LHC experiments such as ATLAS and CMS have converged on
+a common CDB architecture, which is also now shared by the Belle II experiment at KEK \cite{b2cdb}.
 
-In this approach, there is a separation of the content (commonly termed \textit{payload})
+The salient feature of this approach is the separation of the \textbf{metadata} and the \textbf{content}
+(commonly termed \textit{payloads} as there can be numerous types and pieces of data corresponding
+to a particular time period and operating parameters of the experiment). It is important to note that
+the interface to CDB is based on the REST technology. The metadata is queried first in order to
+get a reference to the set of payloads that comprise the conditions data, then the conditions data
+is served to the requestor.
+
+In case of CMS, the payloads are stored as binary objects within a database table, whereas in Belle II
+the data are kept in files which are served to the requestor using a highly performant NGNIX server instance
+\cite{nginx}. A Web service locates the reference to the data first (as URLs pointing to the relevant set of files)
+and the application then accesses the NGNIX server.
+
+This design provides ample opportunities to ue caching.
 
 
 %% \begin{figure}[tbh]
@@ -82,6 +96,12 @@ In this approach, there is a separation of the content (commonly termed \textit{
 
 \bibitem{func_test}
 {\textit{Functional tests of a prototype for the CMS-ATLAS common non-event data handling framework}} \url{https://iopscience.iop.org/article/10.1088/1742-6596/898/4/042047}
+
+\bibitem{b2cdb}
+{\textit{Conditions Database for the Belle II Experiment}}
+
+\bibitem{nginx}
+{\url{https://www.nginx.com/}}
 
 \bibitem{condb}
 {\textit{Conditions Database at Fermilab}  \url{https://cdcvs.fnal.gov/redmine/projects/condb/wiki/Conditions_Database_at_Fermilab}}
