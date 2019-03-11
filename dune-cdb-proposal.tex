@@ -8,7 +8,7 @@
 \usepackage[pdftex,pdfpagelabels,bookmarks,hyperindex,hyperfigures]{hyperref}
 
 
-\title{Modern architectures of the Conditions Database Systems and their potential applications in DUNE}
+\title{A proposal to implement a modern architecture for the Conditions Database Systems in DUNE}
 \date{\today}
 \author{P.\,Laycock, M.\,Potekhin}
 
@@ -22,8 +22,8 @@ the use cases and challenges of the Conditions Database systems based on the exp
 of the LHC and other projects. New and converging designs have been created and
 implemented in experiments such as CMS, Belle II and others. In this short paper we consider the features
 of these new architectures and potential advantages they can bring to DUNE. In conclusion,
-we note that the Conditions Database expertise that exist within the BNL team of developers
-can be leveraged to the benfit of the DUNE experiment.
+we note that the Conditions Database expertise that exists within the BNL team of developers
+can be leveraged to the benefit of the DUNE experiment.
 
 %% \cite{docdb1086}, DocDB\ and
 \end{abstract}
@@ -31,19 +31,22 @@ can be leveraged to the benfit of the DUNE experiment.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Overview}
-According to  the HSF document titled \textit{``A Roadmap for HEP Software and Computing R\&D for the 2020s''} \cite{hsf_roadmap},
+According to  the HSF document titled \textbf{``A Roadmap for HEP Software and Computing R\&D for the 2020s''} \cite{hsf_roadmap},
 \begin{quote}
+\textit{
 Conditions data is defined as the non-event data required by data-processing software to correctly simulate,
 digitise or reconstruct the raw detector event data. The non-event data discussed here consists mainly of
 detector calibration and alignment information, with some additional data describing the detector configuration,
 the machine parameters, as well as information from the detector control system.
+}
 \end{quote}
 \noindent It is important to note that the conditions data comprises a considerable variety of information,
 which may also come in different formats and in different volumes depending on the use case. In the following
 we will use the abbreviated term \textbf{CDB } to refer to the conditions database both as a concept and as an
 instance where appropriate.
 
-An crucial feature of the operating environment of a CDB is a potentially very high access rate due to a large
+An crucial feature of the operating environment of a CDB is a potentially very high access rate
+(hence high load on the database service) due to a large
  number of processing jobs runnning simultaneously in the distrubuted environment and requesting the conditions
 data. Use of some sort of efficient caching mechanism is mandatory for the system to be performant.
 
@@ -66,6 +69,10 @@ carefully designed tables
 to a particular time period and operating parameters of the experiment)
 
 \item The CDB interface based on the REST technology
+
+\item The design element often referred to as ``Global Tag'', which serves to aggregate a variety
+of data and map it to a single unique key to facilitate access
+
 \end{itemize}
 
 
@@ -78,21 +85,34 @@ the data are kept in files which are served to the requestor using a highly perf
 and the application then obtaines these data via the NGNIX server.
 
 This design provides ample opportunities for caching. The metadata service can be fronted by a number
-of caching solutions. Same applies to ehe content server (e.g. the service delivering the payloads) and in
+of caching solutions. Same applies to the content server (i.e. the service delivering the payloads) and in
 addition solution such as CVMFS can be put into place.
 
 \section{Current technology used in DUNE}
 
 The current ``default'' solution for the conditions data is the \textit{ConDB} system developed and maintened
-at FNAL. It is modeled after the \textit{``COOL''} design used in ATLAS which is now considered obsolete and difficult to
-maintain. The data model in ConDB is based on the notion of ``channels'' such as individual detector channels.
-The basic use case used in the design was one that included calibration constants for the detector channels.
-There is no way to include arbitrary elements of data (e.g. MC-derived parameters, maps etc) except for making
-``fake'' channels and mapping data to those channels which may be crafty and/or unwieldy. Binary objects
+at FNAL \cite{condb}. It is modeled after the \textit{``COOL''} design used in ATLAS which is now considered obsolete and
+difficult to maintain. The data model in ConDB is based on the notion of ``channels'' such as individual detector
+channels. The basic use case which inspired ths design was one that included calibration constants for the detector channels.
+There is no way to include arbitrary elements of data (e.g. MC-derived parameters, constants, maps etc) except for
+making ``fake'' channels and mapping data to those channels which may be crafty and/or unwieldy. Binary objects
 required by applications (e.g. ROOT files containing calibrations constants) are difficult and/or suboptimal
-to incorporate.
+to incorporate. Since all data in ConDB is stored within the database itself, there is potential lack of scalability
+when it comes to the systems with very large channel counts such as DUNE Far and Near detectors.
 
-The modern design used in CMS, Belle II and now actively pursued in the ATLAS R\&D is free of these limitiations.
+The modern design used in CMS, Belle II and now actively pursued in the ATLAS R\&D is mostly free of these limitiations.
+
+\section{The Proposal}
+
+Currently the  Brookhaven National Laboratory has a pool of talent who possess a considerable actual experience
+and expertise in the design, implementation and operation of CDBs in a number of experiments. The successful
+migration of the mission-critical Belle II CDB services from PNNL to BNL and subsequent problem-free operation of that
+database are a testament to that. New hires at BNL such as Paul Laycock have considerable prior expertise in running
+CDBs for ATLAS and other experiments.
+
+We propose to launch a collaboration-wide effort in DUNE involving BNL to pursue and eventually implement the updated
+design for the DUNE Conditions Database to ensure it is performant, easy to maintain and essentially future-proof.
+
 
 
 %% \begin{figure}[tbh]
